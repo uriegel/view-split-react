@@ -1,5 +1,5 @@
 import './App.css'
-import { HorizontalSplit } from './component'
+import ViewSplit from './component/index'
 
 const FirstView = () => (
 	<div className='first'></div>
@@ -9,9 +9,17 @@ const SecondView = () => (
 	<div className='second'></div>
 )
 
+const ThirdView = () => (
+	<div className='third'></div>
+)
+
+const VerticalSplitView = () => (
+	<ViewSplit firstView={ FirstView } secondView={ SecondView } />
+)
+
 const App = () => (
 	<div className="App">
-		<HorizontalSplit firstView={ FirstView } secondView={ SecondView } />
+		<ViewSplit isHorizontal={true} firstView={VerticalSplitView} secondView={ThirdView} />
 	</div>
 )
 

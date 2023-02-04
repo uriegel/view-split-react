@@ -2,11 +2,12 @@ import React, { useRef } from 'react'
 import './ViewSplit.css'
 
 interface ViewProp {
+    isHorizontal?: boolean
     firstView: ()=>JSX.Element
     secondView: ()=>JSX.Element
 }
 
-export const HorizontalSplit = ({ firstView, secondView }: ViewProp) => {
+const ViewSplit = ({ isHorizontal, firstView, secondView }: ViewProp) => {
 
     const first = useRef<HTMLDivElement>(null)
     const second = useRef<HTMLDivElement>(null)
@@ -16,23 +17,22 @@ export const HorizontalSplit = ({ firstView, secondView }: ViewProp) => {
         const evt = e.nativeEvent
         if (evt.which != 1) 
             return
-        const isVertical = false // this.getAttribute("orientation") == VERTICAL
-        const size1 = isVertical ? first.current!.offsetHeight : first.current!.offsetWidth
-        const size2 = isVertical ? second.current!.offsetHeight : second.current!.offsetWidth
-        const initialPosition = isVertical ? evt.pageY : evt.pageX		
+        const size1 = isHorizontal ? first.current!.offsetHeight : first.current!.offsetWidth
+        const size2 = isHorizontal ? second.current!.offsetHeight : second.current!.offsetWidth
+        const initialPosition = isHorizontal ? evt.pageY : evt.pageX
 
-        let timestap = performance.now()
+        let timestamp = performance.now()
 
         const onMouseMove = (evt: MouseEvent) => {
             const newTime = performance.now()
-            const diff = newTime - timestap
+            const diff = newTime - timestamp
             if (diff > 20) {
-                timestap = newTime
+                timestamp = newTime
 
-                let delta = (isVertical ? evt.pageY : evt.pageX) - initialPosition
+                let delta = (isHorizontal ? evt.pageY : evt.pageX) - initialPosition
                 if (delta < 10 - size1)
                     delta = 10 - size1
-                const maxSize = (isVertical
+                const maxSize = (isHorizontal
                     ? first.current!.parentElement!.offsetHeight
                     : first.current!.parentElement!.offsetWidth) - 10 - size1 - 6   
                 if (delta > maxSize)
@@ -42,8 +42,10 @@ export const HorizontalSplit = ({ firstView, secondView }: ViewProp) => {
                 const newSize2 = size2 - delta
 
                 const procent2 = newSize2 / (newSize2 + newSize1 + 
-                    (isVertical ? splitter.current!.offsetHeight : splitter.current!.offsetWidth)) * 100
+                    (isHorizontal ? splitter.current!.offsetHeight : splitter.current!.offsetWidth)) * 100
 
+                document.body.style.cursor = isHorizontal ? 'ns-resize' : 'ew-resize'
+                
                 const size = `0 0 ${procent2}%` 
                 second.current!.style.flex = size
                 // TODO
@@ -60,6 +62,8 @@ export const HorizontalSplit = ({ firstView, secondView }: ViewProp) => {
 
             evt.stopPropagation()
             evt.preventDefault()
+
+            document.body.style.cursor = ""
         }
 
         window.addEventListener('mousemove', onMouseMove, true)
@@ -70,7 +74,7 @@ export const HorizontalSplit = ({ firstView, secondView }: ViewProp) => {
     }
 
     return (
-        <div className='vsr--container'>
+        <div className={`vsr--container ${isHorizontal ? "horizontal" : ""}`}>
             <div ref={first} className='vsr--view'>
                 { firstView() }
             </div>
@@ -82,3 +86,4 @@ export const HorizontalSplit = ({ firstView, secondView }: ViewProp) => {
     )
 }
 
+export default ViewSplit

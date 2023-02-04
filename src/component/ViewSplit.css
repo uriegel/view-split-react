@@ -8,6 +8,10 @@
     display: flex;
 }
 
+.vsr--container.horizontal {
+    flex-direction: column;
+}
+
 .vsr--view > * {
     flex-grow: 1;
     user-select: none;
@@ -19,3 +23,12 @@
     user-select: none;
     transition: background-color 0.4s;
 }
+
+.vsr--container.horizontal .vsr--splitter {
+    cursor: ns-resize;   
+}
+
+.vsr--container.horizontal .vsr--container .vsr--splitter {
+    cursor: ew-resize;   
+}
+
