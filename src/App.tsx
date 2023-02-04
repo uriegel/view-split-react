@@ -1,12 +1,18 @@
 import './App.css'
 import { HorizontalSplit } from './component'
 
-function App() {
-	return (
-		<div className="App">
-			<HorizontalSplit/>
-		</div>
-	)
-}
+const FirstView = () => (
+	<div className='first'></div>
+)
+
+const SecondView = () => (
+	<div className='second'></div>
+)
+
+const App = () => (
+	<div className="App">
+		<HorizontalSplit firstView={ FirstView } secondView={ SecondView } />
+	</div>
+)
 
 export default App

@@ -1,0 +1,21 @@
+.vsr--container {
+    display: flex;
+    flex-grow: 1;
+}
+
+.vsr--view {
+    flex-grow: 1;
+    display: flex;
+}
+
+.vsr--view > * {
+    flex-grow: 1;
+    user-select: none;
+}
+
+.vsr--splitter {
+    flex: 0 0 6px;
+    cursor: ew-resize;
+    user-select: none;
+    transition: background-color 0.4s;
+}
