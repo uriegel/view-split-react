@@ -1,9 +1,10 @@
 import './App.css'
+import { HorizontalSplit } from './component'
 
 function App() {
 	return (
 		<div className="App">
-			Hello View Split
+			<HorizontalSplit/>
 		</div>
 	)
 }
