@@ -1,3 +1,9 @@
+:root {
+    --vsr-grip-color : lightgray;
+    --vsr-grip-hover-color : #bbb8b5;
+    --vsr-grip-active-color : #8f8d8b;    
+}
+
 .vsr--container {
     display: flex;
     flex-grow: 1;
@@ -21,7 +27,16 @@
     flex: 0 0 6px;
     cursor: ew-resize;
     user-select: none;
+    background-color: var(--vsr-grip-color);
     transition: background-color 0.4s;
+}
+
+.vsr--splitter:hover {
+    background-color: var(--vsr-grip-hover-color);
+}
+
+.vsr--splitter:active {
+    background-color: var(--vsr-grip-active-color);
 }
 
 .vsr--container.horizontal .vsr--splitter {

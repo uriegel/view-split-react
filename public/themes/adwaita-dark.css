@@ -1,0 +1,12 @@
+:root .themeAdwaitaDark {
+    --vsr-grip-color : #262626;
+    --vsr-grip-hover-color : #383838;
+    --vsr-grip-active-color : #585858;
+}
+
+body.themeAdwaitaDark {
+    background-color: rgb(20, 20, 20);
+    color: white;
+}
+
+
