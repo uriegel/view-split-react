@@ -1,6 +1,6 @@
 {
   "name": "view-split-react",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Splitting a view in two parts separated by a adjustable splitter, React component",
   "author": "uriegel",
   "license": "MIT",

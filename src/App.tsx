@@ -13,7 +13,6 @@ const changeTheme = (theme: string) => {
     document.body.classList.add(theme)    
 }
 
-
 const FirstView = () => (
 	<div className='first'></div>
 )
@@ -32,6 +31,7 @@ const VerticalSplitView = () => (
 
 const App = () => {
     const [theme, setTheme] = useState(themes[0])
+    const [lowerOn, setLowerOn] = useState(false)
 
     const onThemeChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const theme = themes.find(n => n.name == e.target.value)!
@@ -39,12 +39,20 @@ const App = () => {
         setTheme(theme)
     }
 
+    const onShowLowerChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLowerOn(e.target.checked)
+    }
+
 	return (
 		<div className="App">
-            <select value={theme.name} onChange={onThemeChange}>
-                {themes.map((n, i) => <option key={i}>{n.name}</option>) }
-            </select>
-			<ViewSplit isHorizontal={true} firstView={VerticalSplitView} secondView={ThirdView} />
+            <div>
+                <select value={theme.name} onChange={onThemeChange}>
+                    {themes.map((n, i) => <option key={i}>{n.name}</option>)}
+                </select>
+                <input type="checkbox" checked={lowerOn} onChange={onShowLowerChanged}></input>
+                Show lower pane
+            </div>
+			<ViewSplit isHorizontal={true} firstView={VerticalSplitView} secondView={ThirdView} initialWidth={30} secondVisible={lowerOn} />
 		</div>
 	)
 }

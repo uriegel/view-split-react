@@ -1,21 +1,28 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import './ViewSplit.css'
 
 interface ViewProp {
     isHorizontal?: boolean
+    initialWidth?: number
     firstView: ()=>JSX.Element
-    secondView: ()=>JSX.Element
+    secondView: () => JSX.Element
+    secondVisible?: boolean
 }
 
-const ViewSplit = ({ isHorizontal, firstView, secondView }: ViewProp) => {
+const ViewSplit = ({ isHorizontal, firstView, secondView, secondVisible, initialWidth}: ViewProp) => {
 
     const first = useRef<HTMLDivElement>(null)
     const second = useRef<HTMLDivElement>(null)
     const splitter = useRef<HTMLDivElement>(null)
 
+    useEffect(() => {
+        if (initialWidth && second.current) 
+            second.current.style.flex = `0 0 ${initialWidth}%`
+    }, [initialWidth, secondVisible])
+
     const onMouseDown = (e: React.MouseEvent) => {
         const evt = e.nativeEvent
-        if (evt.which != 1) 
+        if (evt.button != 0) 
             return
         const size1 = isHorizontal ? first.current!.offsetHeight : first.current!.offsetWidth
         const size2 = isHorizontal ? second.current!.offsetHeight : second.current!.offsetWidth
@@ -48,9 +55,6 @@ const ViewSplit = ({ isHorizontal, firstView, secondView }: ViewProp) => {
                 
                 const size = `0 0 ${procent2}%` 
                 second.current!.style.flex = size
-                // TODO
-                //this.dispatchEvent(new CustomEvent('position-changed'))
-
             }
             evt.stopPropagation()
             evt.preventDefault()
@@ -78,10 +82,14 @@ const ViewSplit = ({ isHorizontal, firstView, secondView }: ViewProp) => {
             <div ref={first} className='vsr--view'>
                 { firstView() }
             </div>
-            <div ref={splitter} className='vsr--splitter' onMouseDown={onMouseDown}></div>
-            <div ref={second} className='vsr--view'>
-                { secondView() }
-            </div>
+            {secondVisible == undefined || secondVisible ?
+                (<>
+                    <div ref={splitter} className='vsr--splitter' onMouseDown={onMouseDown}></div>
+                    <div ref={second} className='vsr--view'>
+                        { secondView() }
+                    </div>
+                </>)
+                : (<></>)}
         </div>        
     )
 }
