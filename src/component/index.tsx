@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './ViewSplit.css'
 
 interface ViewProp {
@@ -14,6 +14,7 @@ const ViewSplit = ({ isHorizontal, firstView, secondView, secondVisible, initial
     const first = useRef<HTMLDivElement>(null)
     const second = useRef<HTMLDivElement>(null)
     const splitter = useRef<HTMLDivElement>(null)
+    const [isDragging, setIsDragging] = useState(false)
 
     useEffect(() => {
         if (initialWidth && second.current) 
@@ -68,8 +69,11 @@ const ViewSplit = ({ isHorizontal, firstView, secondView, secondVisible, initial
             evt.preventDefault()
 
             document.body.style.cursor = ""
+
+            setIsDragging(false)
         }
 
+        setIsDragging(true)
         window.addEventListener('mousemove', onMouseMove, true)
         window.addEventListener('mouseup', onMouseUp, true)
 
@@ -80,13 +84,15 @@ const ViewSplit = ({ isHorizontal, firstView, secondView, secondVisible, initial
     return (
         <div className={`vsr--container ${isHorizontal ? "horizontal" : ""}`}>
             <div ref={first} className='vsr--view'>
-                { firstView() }
+                {firstView()}
+                {isDragging ? (<div className="overlay"></div>) : null}
             </div>
             {secondVisible == undefined || secondVisible ?
                 (<>
                     <div ref={splitter} className='vsr--splitter' onMouseDown={onMouseDown}></div>
                     <div ref={second} className='vsr--view'>
-                        { secondView() }
+                        {secondView()}
+                        {isDragging ? (<div className="vsr--overlay"></div>) : null}
                     </div>
                 </>)
                 : (<></>)}
