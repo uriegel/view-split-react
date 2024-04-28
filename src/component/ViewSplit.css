@@ -1,7 +1,9 @@
 :root {
-    --vsr-grip-color : lightgray;
-    --vsr-grip-hover-color : #bbb8b5;
-    --vsr-grip-active-color : #8f8d8b;    
+    --vsr-grip-color: lightgray;
+    --vsr-grip-hover-color: #bbb8b5;
+    --vsr-grip-active-color: #8f8d8b;    
+    --vsr-grip-width: 6px;
+    --vsr-grip-padding: 0px;
 }
 
 .vsr--container {
@@ -27,6 +29,9 @@
 
 .vsr--splitter {
     flex: 0 0 6px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: var(--vsr-grip-width);
     cursor: ew-resize;
     user-select: none;
     background-color: var(--vsr-grip-color);
@@ -37,18 +42,18 @@
 .vsr--vertical-grip {
     position: absolute;
     top: 0px;
-    left: -50px;
-    right: -50px;
+    left: calc(var(--vsr-grip-padding) * -1);
+    right: calc(var(--vsr-grip-padding) * -1);
     bottom: 0px;
     z-index: 1000;
 }
 
 .vsr--horizontal-grip {
     position: absolute;
-    top: -50px;
+    top: calc(var(--vsr-grip-padding) * -1);
     left: 0px;
     right: 0px;
-    bottom: -50px;
+    bottom: calc(var(--vsr-grip-padding) * -1);
     z-index: 1000;
 }
 
