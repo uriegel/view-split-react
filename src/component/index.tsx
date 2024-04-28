@@ -82,14 +82,16 @@ const ViewSplit = ({ isHorizontal, firstView, secondView, secondVisible, initial
     }
 
     return (
-        <div className={`vsr--container ${isHorizontal ? "horizontal" : ""}`}>
+        <div className={`vsr--container ${isHorizontal ? "vsr--horizontal" : ""}`}>
             <div ref={first} className='vsr--view'>
                 {firstView()}
                 {isDragging ? (<div className="overlay"></div>) : null}
             </div>
             {secondVisible == undefined || secondVisible ?
                 (<>
-                    <div ref={splitter} className='vsr--splitter' onMouseDown={onMouseDown}></div>
+                    <div ref={splitter} className='vsr--splitter' onMouseDown={onMouseDown}>
+                        <div className={`${isHorizontal ? "vsr--horizontal-grip" : "vsr--vertical-grip"}`}></div>
+                    </div>
                     <div ref={second} className='vsr--view'>
                         {secondView()}
                         {isDragging ? (<div className="vsr--overlay"></div>) : null}

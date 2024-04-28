@@ -7,6 +7,7 @@
 .vsr--container {
     display: flex;
     flex-grow: 1;
+    overflow: hidden;
 }
 
 .vsr--view {
@@ -15,7 +16,7 @@
     position: relative;
 }
 
-.vsr--container.horizontal {
+.vsr--container.vsr--horizontal {
     flex-direction: column;
 }
 
@@ -30,6 +31,25 @@
     user-select: none;
     background-color: var(--vsr-grip-color);
     transition: background-color 0.4s;
+    position: relative;
+}
+
+.vsr--vertical-grip {
+    position: absolute;
+    top: 0px;
+    left: -50px;
+    right: -50px;
+    bottom: 0px;
+    z-index: 1000;
+}
+
+.vsr--horizontal-grip {
+    position: absolute;
+    top: -50px;
+    left: 0px;
+    right: 0px;
+    bottom: -50px;
+    z-index: 1000;
 }
 
 .vsr--splitter:hover {
@@ -40,11 +60,11 @@
     background-color: var(--vsr-grip-active-color);
 }
 
-.vsr--container.horizontal .vsr--splitter {
+.vsr--container.vsr--horizontal .vsr--splitter {
     cursor: ns-resize;   
 }
 
-.vsr--container.horizontal .vsr--container .vsr--splitter {
+.vsr--container.vsr--horizontal .vsr--container .vsr--splitter {
     cursor: ew-resize;   
 }
 
